@@ -1,0 +1,2 @@
+# SHU_community_school_seatchoose
+上海大学社区学院自习室选座系统
