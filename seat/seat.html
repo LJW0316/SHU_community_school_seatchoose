@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../styles/seat.css">
+        <script type="text/javascript" src="../scripts/seat.js"></script>
+        <script src="../scripts/vue.js"></script>
+        <title>选座系统</title>
+    </head>
+    <body>
+        <div class="head">
+            <div class="head-item" onclick="changeSystem()">选座系统</div>
+            <div class="head-item" onclick="changeNotice()">选座须知</div>
+            <div class="head-item" onclick="changeSearch()">选座查询</div>
+            <div class="head-item" onclick="changeSheet()">座位表</div>
+            <div class="head-item" onclick="myself()">
+                <img src="../images/myself.png" style="height: 50px; width: 80px;"></img>
+            </div>
+        </div>
+        <div id="main">
+            <div v-show="isShowSystem">
+                <div v-if="disorder<=3">
+                    <div class="title">社区学院13幢4楼自习室</div>
+                    <form style="text-align: center" name="choose">
+                        <div style="height:50px;margin-top: 80px;font-size: 20px;">请选择预约日期：
+                            <select id="date"  name="date" onfocus="choseDate()">
+                                <option value="0">请选择</option>
+                            </select>
+                        </div>
+                        <div style="height:50px;margin-top: 80px;font-size: 20px;">请选择预约时间：
+                            <select name="time" id="time"  onfocus="choseTime()">
+                                <option value="0">请选择</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="submitSeat()">提交</button>
+                    </form>
+                </div>
+                <div v-else style="color: red;font-size:40px;text-align: center;margin-top: 300px;">您的违约次数已超过三次，暂时无法预约座位</div>
+            </div>
+            <div v-show="isShowNotice">
+                <div class="box">
+                    <p class="title">选座须知</p>
+                    <div class="text">
+                        <p>1.登陆后请及时在选座系统标题栏最右侧进入个人中心修改密码</p>
+                        <p>2.最多提前七天选座。</p>
+                        <p>3.每人每天可选1次，1次2小时，注意合理安排时间。</p>
+                        <p>4.请按时在门口刷卡签到进入自习室，未刷卡记入违规次数。</p>
+                        <p>5.记满三次违规系统将禁止使用1周。</p>
+                        <p>6.预约一旦提交无法更改，请慎重选择，注意合理安排时间。</p>
+                        <p>7.每次预约需进入自习室签到完成后才能进行下一次的预约。</p>
+                    </div>
+                </div>
+            </div>
+            <div v-show="isShowSearch" class="search">
+                <div v-show="isShowChoose1">您还未选择座位</div>
+                <div v-show="isShowChoose2">您选择的座位号是：{{ seatnum }},预约时间：{{ date }},{{ time }} </div>
+                <div style="color: red; margin: 50px;">您的违规次数：{{ disorder }}次</div>
+            </div>
+            <div v-show="isShowSheet"></div>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:"#main",
+        data:{
+            isShowSystem:false,
+            isShowNotice:true,
+            isShowSearch:false,
+            isShowSheet:false,
+            isShowChoose1:true,
+            isShowChoose2:false,
+            seatnum:(Math.random() * 50).toFixed(0),
+            date:'',
+            time:'',
+            disorder:0
+        }
+    })
+</script>
